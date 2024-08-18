@@ -21,8 +21,7 @@ import org.apache.hadoop.hbase.HConstants;
 import org.apache.phoenix.query.BaseTest
 import org.apache.phoenix.util.PhoenixRuntime
 import org.apache.phoenix.util.ReadOnlyProps;
-import org.apache.spark.sql.{SQLContext, SparkSession}
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.sql.SparkSession
 import org.scalatest.{BeforeAndAfter, BeforeAndAfterAll, FunSuite, Matchers}
 
 
@@ -64,9 +63,9 @@ class AbstractPhoenixSparkIT extends FunSuite with Matchers with BeforeAndAfter 
     conf
   }
 
-  lazy val quorumAddress = {
-    ConfigurationUtil.getZookeeperURL(hbaseConfiguration).get
-  }
+  lazy val jdbcUrl = PhoenixSparkITHelper.getUrl
+
+  lazy val quorumAddress = ConfigurationUtil.getZookeeperURL(hbaseConfiguration).get
 
   // Runs SQL commands located in the file defined in the sqlSource argument
   // Optional argument tenantId used for running tenant-specific SQL
@@ -102,12 +101,6 @@ class AbstractPhoenixSparkIT extends FunSuite with Matchers with BeforeAndAfter 
     setupTables("transactionTableSetup.sql", None)
     // We pass in a TenantId to allow the DDL to create tenant-specific tables/views
     setupTables("tenantSetup.sql", Some(TenantId))
-
-    //FIXME is this ever used ?
-    val conf = new SparkConf()
-      .setAppName("PhoenixSparkIT")
-      .setMaster("local[2]") // 2 threads, some parallelism
-      .set("spark.ui.showConsoleProgress", "false") // Disable printing stage progress
 
     spark = SparkSession
       .builder()

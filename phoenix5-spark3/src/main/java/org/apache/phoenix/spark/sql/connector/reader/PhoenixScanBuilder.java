@@ -18,7 +18,7 @@
 package org.apache.phoenix.spark.sql.connector.reader;
 
 import org.apache.phoenix.thirdparty.com.google.common.annotations.VisibleForTesting;
-import org.apache.phoenix.spark.FilterExpressionCompiler;
+import org.apache.phoenix.spark.sql.connector.FilterExpressionCompiler;
 import org.apache.spark.sql.connector.read.Scan;
 import org.apache.spark.sql.connector.read.ScanBuilder;
 import org.apache.spark.sql.connector.read.SupportsPushDownFilters;
@@ -60,7 +60,8 @@ public class PhoenixScanBuilder implements ScanBuilder, SupportsPushDownFilters,
 
     @Override
     public void pruneColumns(StructType requiredSchema) {
-        this.schema = requiredSchema;
+        if (requiredSchema.fields() != null && requiredSchema.fields().length != 0)
+            this.schema = requiredSchema;
     }
 
     @VisibleForTesting

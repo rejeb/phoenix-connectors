@@ -22,6 +22,10 @@ import java.util.Properties;
 
 import org.apache.phoenix.spark.datasource.v2.reader.PhoenixDataSourceReader;
 import org.apache.phoenix.spark.datasource.v2.writer.PhoenixDataSourceWriter;
+import org.apache.phoenix.util.PhoenixRuntime;
+import org.apache.spark.sql.SQLContext;
+import org.apache.spark.sql.sources.BaseRelation;
+import org.apache.spark.sql.sources.RelationProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.spark.sql.SaveMode;
@@ -33,6 +37,7 @@ import org.apache.spark.sql.sources.v2.WriteSupport;
 import org.apache.spark.sql.sources.v2.reader.DataSourceReader;
 import org.apache.spark.sql.sources.v2.writer.DataSourceWriter;
 import org.apache.spark.sql.types.StructType;
+import scala.collection.immutable.Map;
 
 import static org.apache.phoenix.util.PhoenixRuntime.JDBC_PROTOCOL;
 import static org.apache.phoenix.util.PhoenixRuntime.JDBC_PROTOCOL_SEPARATOR;
@@ -40,7 +45,7 @@ import static org.apache.phoenix.util.PhoenixRuntime.JDBC_PROTOCOL_SEPARATOR;
 /**
  * Implements the DataSourceV2 api to read and write from Phoenix tables
  */
-public class PhoenixDataSource  implements DataSourceV2,  ReadSupport, WriteSupport, DataSourceRegister {
+public class PhoenixDataSource implements DataSourceV2, ReadSupport, WriteSupport, DataSourceRegister, RelationProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(PhoenixDataSource.class);
     public static final String SKIP_NORMALIZING_IDENTIFIER = "skipNormalizingIdentifier";
@@ -48,6 +53,11 @@ public class PhoenixDataSource  implements DataSourceV2,  ReadSupport, WriteSupp
     public static final String ZOOKEEPER_URL = "zkUrl";
     public static final String JDBC_URL = "jdbcUrl";
     public static final String PHOENIX_CONFIGS = "phoenixconfigs";
+    public static final String TABLE = "table";
+    public static final String DATE_AS_TIME_STAMP = "dateAsTimestamp";
+    public static final String DO_NOT_MAP_COLUMN_FAMILY = "doNotMapColumnFamily";
+    public static final String TENANT_ID = "tenantId";
+
 
     @Override
     public DataSourceReader createReader(DataSourceOptions options) {
@@ -56,7 +66,7 @@ public class PhoenixDataSource  implements DataSourceV2,  ReadSupport, WriteSupp
 
     @Override
     public Optional<DataSourceWriter> createWriter(String writeUUID, StructType schema,
-            SaveMode mode, DataSourceOptions options) {
+                                                   SaveMode mode, DataSourceOptions options) {
         return Optional.of(new PhoenixDataSourceWriter(mode, schema, options));
     }
 
@@ -93,6 +103,7 @@ public class PhoenixDataSource  implements DataSourceV2,  ReadSupport, WriteSupp
      * {@link PhoenixDataSource#PHOENIX_CONFIGS}. The corresponding value should be a
      * comma-separated string containing property names and property values. For example:
      * prop1=val1,prop2=val2,prop3=val3
+     *
      * @param options DataSource options passed in
      * @return Properties map
      */
@@ -117,6 +128,10 @@ public class PhoenixDataSource  implements DataSourceV2,  ReadSupport, WriteSupp
             if (logger.isDebugEnabled()) {
                 logger.debug("Got the following Phoenix/HBase config:\n" + confToSet);
             }
+            String tenantId = options.get(TENANT_ID).orElse(null);
+            if (tenantId != null) {
+                confToSet.setProperty(PhoenixRuntime.TENANT_ID_ATTRIB, tenantId);
+            }
         }
         return confToSet;
     }
@@ -125,4 +140,10 @@ public class PhoenixDataSource  implements DataSourceV2,  ReadSupport, WriteSupp
     public String shortName() {
         return "phoenix";
     }
+
+    @Override
+    public BaseRelation createRelation(SQLContext sqlContext, Map<String, String> parameters) {
+        return new PhoenixSparkSqlRelation(sqlContext.sparkSession(), parameters);
+    }
+
 }

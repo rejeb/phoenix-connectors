@@ -14,7 +14,6 @@
 package org.apache.phoenix.spark
 
 import java.sql.DriverManager
-
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.hbase.HConstants
 import org.apache.hadoop.io.NullWritable
@@ -22,6 +21,7 @@ import org.apache.phoenix.jdbc.PhoenixDriver
 import org.apache.phoenix.mapreduce.PhoenixInputFormat
 import org.apache.phoenix.mapreduce.util.PhoenixConfigurationUtil
 import org.apache.phoenix.query.HBaseFactoryProvider
+import org.apache.phoenix.spark.sql.connector.SparkSchemaUtil
 import org.apache.spark.{Partition, SparkContext, TaskContext}
 import org.apache.spark.annotation.DeveloperApi
 import org.apache.spark.rdd.RDD

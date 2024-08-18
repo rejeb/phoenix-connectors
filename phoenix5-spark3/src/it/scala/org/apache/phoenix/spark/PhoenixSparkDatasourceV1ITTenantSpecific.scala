@@ -28,7 +28,7 @@ import scala.collection.mutable.ListBuffer
   * -Xmx1536m -XX:MaxPermSize=512m -XX:ReservedCodeCacheSize=512m
   *
   */
-class PhoenixSparkITTenantSpecific extends AbstractPhoenixSparkIT {
+class PhoenixSparkDatasourceV1ITTenantSpecific extends AbstractPhoenixSparkIT {
 
   // Tenant-specific schema info
   val OrgIdCol = "ORGANIZATION_ID"
@@ -37,6 +37,8 @@ class PhoenixSparkITTenantSpecific extends AbstractPhoenixSparkIT {
 
   // Data set for tests that write to Phoenix
   val TestDataSet = List(("testOrg1", "data1"), ("testOrg2", "data2"), ("testOrg3", "data3"))
+  val TestDataSet2 = List(("testOrg1", "data1", TenantId, "g1"), ("testOrg2", "data2", TenantId, "g3"),
+    ("testOrg3", "data3", TenantId, "g3"))
 
   /**
     * Helper method used by write tests to verify content written.
@@ -99,23 +101,6 @@ class PhoenixSparkITTenantSpecific extends AbstractPhoenixSparkIT {
 
     val df = spark.sparkContext.parallelize(TestDataSet).toDF(OrgIdCol, TenantOnlyCol)
     df.saveToPhoenix(TenantTable, zkUrl = Some(quorumAddress), tenantId = Some(TenantId))
-
-    verifyResults
-  }
-
-  test("Can write a DataFrame using 'DataFrame.write' to tenant-specific view") {
-    val sqlContext = spark.sqlContext
-    import sqlContext.implicits._
-
-    val df = spark.sparkContext.parallelize(TestDataSet).toDF(OrgIdCol, TenantOnlyCol)
-
-    df.write
-      .format("phoenix")
-      .mode("overwrite")
-      .option("table", TenantTable)
-      .option(PhoenixRuntime.TENANT_ID_ATTRIB, TenantId)
-      .option("zkUrl", PhoenixSparkITHelper.getUrl)
-      .save()
 
     verifyResults
   }

@@ -13,17 +13,15 @@
  */
 package org.apache.phoenix.spark
 
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.hbase.HConstants
+import org.apache.phoenix.query.BaseTest
+import org.apache.phoenix.util.{PhoenixRuntime, ReadOnlyProps}
+import org.apache.spark.sql.SparkSession
+import org.scalatest.{BeforeAndAfter, BeforeAndAfterAll, FunSuite, Matchers}
+
 import java.sql.{Connection, DriverManager}
 import java.util.Properties
-
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.HConstants;
-import org.apache.phoenix.query.BaseTest
-import org.apache.phoenix.util.PhoenixRuntime
-import org.apache.phoenix.util.ReadOnlyProps;
-import org.apache.spark.sql.{SQLContext, SparkSession}
-import org.apache.spark.{SparkConf, SparkContext}
-import org.scalatest.{BeforeAndAfter, BeforeAndAfterAll, FunSuite, Matchers}
 
 
 // Helper object to access the protected abstract static methods hidden in BaseTest
@@ -49,8 +47,8 @@ object PhoenixSparkITHelper extends BaseTest {
 }
 
 /**
-  * Base class for PhoenixSparkIT
-  */
+ * Base class for PhoenixSparkIT
+ */
 class AbstractPhoenixSparkIT extends FunSuite with Matchers with BeforeAndAfter with BeforeAndAfterAll {
 
   // A global tenantId we can use across tests
@@ -64,15 +62,26 @@ class AbstractPhoenixSparkIT extends FunSuite with Matchers with BeforeAndAfter 
     conf
   }
 
-  lazy val quorumAddress = {
-    ConfigurationUtil.getZookeeperURL(hbaseConfiguration).get
+  lazy val jdbcUrl = PhoenixSparkITHelper.getUrl
+
+  lazy val quorumAddress = ConfigurationUtil.getZookeeperURL(hbaseConfiguration).get
+
+  def getZookeeperURL(conf: Configuration): Option[String] = {
+    List(
+      Option(conf.get(HConstants.ZOOKEEPER_QUORUM)),
+      Option(conf.get(HConstants.ZOOKEEPER_CLIENT_PORT)),
+      Option(conf.get(HConstants.ZOOKEEPER_ZNODE_PARENT))
+    ).flatten match {
+      case Nil => None
+      case x: List[String] => Some(x.mkString(":"))
+    }
   }
 
   // Runs SQL commands located in the file defined in the sqlSource argument
   // Optional argument tenantId used for running tenant-specific SQL
   def setupTables(sqlSource: String, tenantId: Option[String]): Unit = {
     val props = new Properties
-    if(tenantId.isDefined) {
+    if (tenantId.isDefined) {
       props.setProperty(PhoenixRuntime.TENANT_ID_ATTRIB, tenantId.get)
     }
 

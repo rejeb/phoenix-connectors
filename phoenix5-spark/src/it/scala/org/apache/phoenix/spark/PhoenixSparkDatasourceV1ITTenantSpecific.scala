@@ -13,9 +13,6 @@
  */
 package org.apache.phoenix.spark
 
-import org.apache.phoenix.util.PhoenixRuntime
-import org.apache.spark.sql.SQLContext
-
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -28,7 +25,7 @@ import scala.collection.mutable.ListBuffer
   * -Xmx1536m -XX:MaxPermSize=512m -XX:ReservedCodeCacheSize=512m
   *
   */
-class PhoenixSparkITTenantSpecific extends AbstractPhoenixSparkIT {
+class PhoenixSparkDatasourceV1ITTenantSpecific extends AbstractPhoenixSparkIT {
 
   // Tenant-specific schema info
   val OrgIdCol = "ORGANIZATION_ID"
@@ -103,39 +100,6 @@ class PhoenixSparkITTenantSpecific extends AbstractPhoenixSparkIT {
     df.saveToPhoenix(TenantTable, zkUrl = Some(quorumAddress), tenantId = Some(TenantId))
 
     verifyResults
-  }
-
-  ignore("Can write a DataFrame using 'DataFrame.write' to tenant-specific view - Spark2 sparse columns") {
-    val sqlContext = spark.sqlContext
-    import sqlContext.implicits._
-
-    val df = spark.sparkContext.parallelize(TestDataSet2).toDF(OrgIdCol, TenantOnlyCol);
-
-    df.write
-      .format("phoenix")
-      .mode("overwrite")
-      .option("table", TenantTable)
-      .option(PhoenixRuntime.TENANT_ID_ATTRIB, TenantId)
-      .option("zkUrl", PhoenixSparkITHelper.getUrl)
-      .save()
-
-    verifyResults
-  }
-
-  test("Can write a DataFrame using 'DataFrame.write' to tenant-specific view - Spark3 all columns") {
-    val sqlContext = spark.sqlContext
-    import sqlContext.implicits._
-
-    val df = spark.sparkContext.parallelize(TestDataSet2).toDF(OrgIdCol, TenantOnlyCol, "TENANT_ID", "GLOBAL_COL1")
-
-    df.write
-      .format("phoenix")
-      .mode("append")
-      .option("table", TenantTable)
-      .option(PhoenixRuntime.TENANT_ID_ATTRIB, TenantId)
-      .option("zkUrl", PhoenixSparkITHelper.getUrl)
-      .save()
-
   }
 
   test("Can write an RDD to Phoenix tenant-specific view") {
