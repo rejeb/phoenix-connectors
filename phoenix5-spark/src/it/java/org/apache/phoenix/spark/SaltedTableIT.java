@@ -17,6 +17,8 @@
  */
 package org.apache.phoenix.spark;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -27,14 +29,10 @@ import java.sql.SQLException;
 import org.apache.phoenix.end2end.ParallelStatsDisabledTest;
 import org.apache.phoenix.end2end.salted.BaseSaltedTableIT;
 import org.apache.phoenix.util.QueryBuilder;
-import org.junit.Ignore;
 import org.junit.experimental.categories.Category;
 
-// TODO implement spark salted table tests
 @Category(ParallelStatsDisabledTest.class)
-@Ignore("This class runs pheonix tests not spark connector tests.")
-// Making it abstract to avoid running tests
-public abstract class SaltedTableIT extends BaseSaltedTableIT {
+public class SaltedTableIT extends BaseSaltedTableIT {
 
     @Override
     protected ResultSet executeQueryThrowsException(Connection conn, QueryBuilder queryBuilder,

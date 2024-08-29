@@ -29,14 +29,10 @@ import java.sql.SQLException;
 import org.apache.phoenix.end2end.BaseAggregateIT;
 import org.apache.phoenix.end2end.ParallelStatsDisabledTest;
 import org.apache.phoenix.util.QueryBuilder;
-import org.junit.Ignore;
 import org.junit.experimental.categories.Category;
 
-// TODO implement spark aggregate tests
 @Category(ParallelStatsDisabledTest.class)
-@Ignore("This class runs pheonix tests not spark connector tests.")
-// Making it abstract to avoid running tests
-public abstract class AggregateIT extends BaseAggregateIT {
+public class AggregateIT extends BaseAggregateIT {
 
     @Override
     protected ResultSet executeQueryThrowsException(Connection conn, QueryBuilder queryBuilder,
