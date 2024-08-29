@@ -19,7 +19,7 @@ import java.util.Date
 import org.apache.phoenix.mapreduce.util.PhoenixConfigurationUtil
 import org.apache.phoenix.query.QueryServices
 import org.apache.phoenix.schema.types.{PSmallintArray, PVarchar}
-import org.apache.phoenix.spark.datasource.v2.{PhoenixDataSource, PhoenixTestingDataSource, SparkSchemaUtil}
+import org.apache.phoenix.spark.datasource.v2.{PhoenixDataSource, PhoenixTestingDataSource}
 import org.apache.phoenix.spark.datasource.v2.reader.PhoenixTestingInputPartitionReader
 import org.apache.phoenix.spark.datasource.v2.writer.PhoenixTestingDataSourceWriter
 import org.apache.phoenix.util.{ColumnInfo, SchemaUtil}
@@ -77,7 +77,8 @@ class PhoenixSparkIT extends AbstractPhoenixSparkIT {
     df.write
       .format("phoenix")
       .options(Map("table" -> "TABLE5",
-        PhoenixDataSource.JDBC_URL -> jdbcUrl, PhoenixDataSource.SKIP_NORMALIZING_IDENTIFIER -> "true",
+        PhoenixDataSource.JDBC_URL -> jdbcUrl,
+        PhoenixDataSource.SKIP_NORMALIZING_IDENTIFIER -> "true",
         PhoenixDataSource.PHOENIX_CONFIGS -> extraOptions))
       .mode(SaveMode.Overwrite)
       .save()
@@ -113,7 +114,8 @@ class PhoenixSparkIT extends AbstractPhoenixSparkIT {
     df.write
       .format("phoenix")
       .options(Map("table" -> "TABLE5",
-        PhoenixDataSource.JDBC_URL -> jdbcUrl, PhoenixDataSource.SKIP_NORMALIZING_IDENTIFIER -> "true",
+        PhoenixDataSource.JDBC_URL -> jdbcUrl,
+        PhoenixDataSource.SKIP_NORMALIZING_IDENTIFIER -> "true",
         PhoenixDataSource.PHOENIX_CONFIGS -> extraOptions))
       .mode(SaveMode.Overwrite)
       .save()

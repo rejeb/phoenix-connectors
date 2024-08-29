@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.phoenix.spark.sql.connector
+package org.apache.phoenix.spark
 
 import org.apache.phoenix.util.StringUtil.escapeStringConstant
 import org.apache.phoenix.util.{DateUtil, SchemaUtil}

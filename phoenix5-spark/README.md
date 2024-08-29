@@ -22,11 +22,11 @@ and enables persisting DataFrames back to Phoenix.
 
 | Name                      | Default | Usage | Description |
 | table                     | empty   |  R/W  | table name as `namespace.table_name` |
-| zrUrl                     | empty   |  R/W  | List of zookeeper hosts. Deprecated, use `jdbcUrl` instead |
-| jdbcUrl                   | empty   |  R/W  | jdbc url connection to database as `jdbc:phoenix:zkHost:zkport` |
+| zrUrl                     | empty   |  R/W  | (Optional) List of zookeeper hosts. Deprecated, use `jdbcUrl` instead. Recommended not to set, value will be taken from hbase-site.xml |
+| jdbcUrl                   | empty   |  R/W  | (Optional) jdbc url connection to database as `jdbc:phoenix:zkHost:zkport`. Recommended not to set, value will be taken from hbase-site.xml |
 | dateAsTimestamp           | false   |  R    | Cast Date to Timestamp |
 | doNotMapColumnFamily      | false   |  R    | For non default column family. Do not prefix column with column family name |
-| tenantId                  | empty   |  R/W  | Define tenantId when reading from multitenant table |
+| TenantId                  | empty   |  R/W  | Define tenantId when reading from multitenant table |
 | phoenixconfigs            | empty   |  R/W  | Comma seperated value of hbase/phoenix config to override. (property=value,property=value) |
 | skipNormalizingIdentifier | empty   |  W    | skip normalize identifier |
 
@@ -57,12 +57,14 @@ val spark = SparkSession
 val df = spark.sqlContext
   .read
   .format("phoenix")
-  .options(Map("table" -> "TABLE1", "jdbcUrl" -> "jdbc:phoenix:zkHost:zkport"))
+  .option("table", "TABLE1")
   .load
 
 df.filter(df("COL1") === "test_row_1" && df("ID") === 1L)
   .select(df("ID"))
   .show
+
+spark.stop()
 ```
 Java example:
 ```java
@@ -84,12 +86,13 @@ public class PhoenixSparkRead {
             .read()
             .format("phoenix")
             .option("table", "TABLE1")
-            .option("jdbcUrl", "jdbc:phoenix:zkHost:zkport")    
             .load();
         df.createOrReplaceTempView("TABLE1");
     
         df = spark.sql("SELECT * FROM TABLE1 WHERE COL1='test_row_1' AND ID=1L");
         df.show();
+
+      spark.stop();
     }
 }
 ```
@@ -108,12 +111,13 @@ val spark = SparkSession
   .getOrCreate()
 
 // Load data from TABLE1
-spark.sql("CREATE TABLE TABLE1_SQL USING phoenix OPTIONS ('table' 'TABLE1', 'jdbcUrl' 'jdbc:phoenix:zkHost:zkport')")
+spark.sql("CREATE TABLE TABLE1_SQL USING phoenix OPTIONS ('table' 'TABLE1')")
 
-val df = spark.sql(s"SELECT ID FROM $sqlTableName where COL1='test_row_1'")
+val df = spark.sql(s"SELECT ID FROM TABLE1_SQL where COL1='test_row_1'")
 
 df.show
 
+spark.stop()
 ```
 Java example:
 ```java
@@ -132,12 +136,13 @@ public class PhoenixSparkRead {
         
         // Load data from TABLE1
         Dataset<Row> df = spark
-                .sql("CREATE TABLE TABLE1_SQL USING phoenix " +
-                        "OPTIONS ('table' 'TABLE1', 'jdbcUrl' 'jdbc:phoenix:zkHost:zkport')");
+                .sql("CREATE TABLE TABLE1_SQL USING phoenix OPTIONS ('table' 'TABLE1'");
     
         
-        df = spark.sql("SELECT * FROM TABLE1 WHERE COL1='test_row_1' AND ID=1L");
+        df = spark.sql("SELECT * FROM TABLE1_SQL WHERE COL1='test_row_1' AND ID=1L");
         df.show();
+
+        spark.stop();
     }
 }
 ```
@@ -147,8 +152,8 @@ public class PhoenixSparkRead {
 ### Save DataFrames to Phoenix using DataSourceV2
 
 The `save` is method on DataFrame allows passing in a data source type. You can use
-`phoenix` for DataSourceV2 and must also pass in a `table` and `jdbcUrl` parameter to
-specify which table and server to persist the DataFrame to. The column names are derived from
+`phoenix` for DataSourceV2 and must also pass in a `table` parameter to
+specify which table to persist the DataFrame to. The column names are derived from
 the DataFrame's schema field names, and must match the Phoenix column names.
 
 The `save` method also takes a `SaveMode` option, for which only `SaveMode.Overwrite` is supported.
@@ -177,7 +182,6 @@ val df = spark.sqlContext
   .read
   .format("phoenix")
   .option("table", "INPUT_TABLE")
-  .option("jdbcUrl", "jdbc:phoenix:zkHost:zkport")        
   .load
 
 // Save to OUTPUT_TABLE
@@ -185,8 +189,8 @@ df.write
   .format("phoenix")
   .mode(SaveMode.Append)
   .option("table", "OUTPUT_TABLE")
-  .option("jdbcUrl", "jdbc:phoenix:zkHost:zkport")
   .save()
+spark.stop()
 ```
 Java example:
 ```java
@@ -209,7 +213,6 @@ public class PhoenixSparkWriteFromInputTable {
             .read()
             .format("phoenix")
             .option("table", "INPUT_TABLE")
-            .option("jdbcUrl", "jdbc:phoenix:zkHost:zkport")
             .load();
         
         // Save to OUTPUT_TABLE
@@ -217,16 +220,17 @@ public class PhoenixSparkWriteFromInputTable {
           .format("phoenix")
           .mode(SaveMode.Overwrite)
           .option("table", "OUTPUT_TABLE")
-          .option("jdbcUrl", "jdbc:phoenix:zkHost:zkport")
           .save();
+
+        spark.stop();
     }
 }
 ```
 
 ### Save from an external RDD with a schema to a Phoenix table
 
-Just like the previous example, you can pass in the data source type as `phoenix` and specify the `table` and
-`jdbcUrl` parameters indicating which table and server to persist the DataFrame to.
+Just like the previous example, you can pass in the data source type as `phoenix` and specify the `table`  parameter
+indicating which table to persist the DataFrame to.
 
 Note that the schema of the RDD must match its column data and this must match the schema of the Phoenix table
 that you save to.
@@ -265,9 +269,10 @@ val df = spark.createDataFrame(rowRDD, schema)
 df.write
   .format("phoenix")
   .option("table", "OUTPUT_TABLE")
-  .option("jdbcUrl", "jdbc:phoenix:zkHost:zkport")
   .mode(SaveMode.Overwrite)
   .save()
+
+spark.stop()
 ```
 Java example:
 ```java
@@ -312,8 +317,9 @@ public class PhoenixSparkWriteFromRDDWithSchema {
             .format("phoenix")
             .mode(SaveMode.Overwrite)
             .option("table", "OUTPUT_TABLE")
-            .option("jdbcUrl", "jdbc:phoenix:zkHost:zkport")
             .save();
+        
+        spark.stop();
     }
 }
 ```

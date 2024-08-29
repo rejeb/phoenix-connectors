@@ -13,9 +13,6 @@
  */
 package org.apache.phoenix.spark
 
-import org.apache.phoenix.util.PhoenixRuntime
-import org.apache.spark.sql.SQLContext
-
 import scala.collection.mutable.ListBuffer
 
 /**

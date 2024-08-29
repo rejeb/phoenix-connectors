@@ -20,6 +20,8 @@ package org.apache.phoenix.spark.datasource.v2;
 import java.util.Optional;
 import java.util.Properties;
 
+import org.apache.phoenix.query.HBaseFactoryProvider;
+import org.apache.phoenix.spark.ConfigurationUtil;
 import org.apache.phoenix.spark.datasource.v2.reader.PhoenixDataSourceReader;
 import org.apache.phoenix.spark.datasource.v2.writer.PhoenixDataSourceWriter;
 import org.apache.phoenix.util.PhoenixRuntime;
@@ -45,7 +47,8 @@ import static org.apache.phoenix.util.PhoenixRuntime.JDBC_PROTOCOL_SEPARATOR;
 /**
  * Implements the DataSourceV2 api to read and write from Phoenix tables
  */
-public class PhoenixDataSource implements DataSourceV2, ReadSupport, WriteSupport, DataSourceRegister, RelationProvider {
+public class PhoenixDataSource
+        implements DataSourceV2, ReadSupport, WriteSupport, DataSourceRegister, RelationProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(PhoenixDataSource.class);
     public static final String SKIP_NORMALIZING_IDENTIFIER = "skipNormalizingIdentifier";
@@ -56,8 +59,7 @@ public class PhoenixDataSource implements DataSourceV2, ReadSupport, WriteSuppor
     public static final String TABLE = "table";
     public static final String DATE_AS_TIME_STAMP = "dateAsTimestamp";
     public static final String DO_NOT_MAP_COLUMN_FAMILY = "doNotMapColumnFamily";
-    public static final String TENANT_ID = "tenantId";
-
+    public static final String TENANT_ID = "TenantId";
 
     @Override
     public DataSourceReader createReader(DataSourceOptions options) {
@@ -66,15 +68,15 @@ public class PhoenixDataSource implements DataSourceV2, ReadSupport, WriteSuppor
 
     @Override
     public Optional<DataSourceWriter> createWriter(String writeUUID, StructType schema,
-                                                   SaveMode mode, DataSourceOptions options) {
+            SaveMode mode, DataSourceOptions options) {
         return Optional.of(new PhoenixDataSourceWriter(mode, schema, options));
     }
 
     public static String getJdbcUrlFromOptions(final DataSourceOptions options) {
-        if (options.get(JDBC_URL).orElse(null) != null
-                && options.get(ZOOKEEPER_URL).orElse(null) != null) {
-            throw new RuntimeException("If " + JDBC_URL + " is specified, then  " + ZOOKEEPER_URL
-                    + " must not be specified");
+        if (options.get(JDBC_URL).orElse(null) != null && options.get(ZOOKEEPER_URL)
+                .orElse(null) != null) {
+            throw new RuntimeException(
+                    "If " + JDBC_URL + " is specified, then  " + ZOOKEEPER_URL + " must not be specified");
         }
 
         String jdbcUrl = options.get(JDBC_URL).orElse(null);
@@ -98,12 +100,11 @@ public class PhoenixDataSource implements DataSourceV2, ReadSupport, WriteSuppor
     }
 
     /**
-     * Extract HBase and Phoenix properties that need to be set in both the driver and workers.
-     * We expect these properties to be passed against the key
+     * Extract HBase and Phoenix properties that need to be set in both the driver and workers. We
+     * expect these properties to be passed against the key
      * {@link PhoenixDataSource#PHOENIX_CONFIGS}. The corresponding value should be a
      * comma-separated string containing property names and property values. For example:
      * prop1=val1,prop2=val2,prop3=val3
-     *
      * @param options DataSource options passed in
      * @return Properties map
      */
@@ -119,8 +120,8 @@ public class PhoenixDataSource implements DataSourceV2, ReadSupport, WriteSuppor
                     try {
                         confToSet.setProperty(confKeyVal[0], confKeyVal[1]);
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        throw new RuntimeException("Incorrect format for phoenix/HBase configs. "
-                                + "Expected format: <prop1>=<val1>,<prop2>=<val2>,<prop3>=<val3>..",
+                        throw new RuntimeException(
+                                "Incorrect format for phoenix/HBase configs. " + "Expected format: <prop1>=<val1>,<prop2>=<val2>,<prop3>=<val3>..",
                                 e);
                     }
                 }

@@ -14,11 +14,10 @@
 package org.apache.phoenix.spark
 
 import org.apache.phoenix.mapreduce.util.PhoenixConfigurationUtil
-import org.apache.phoenix.query.QueryServices
 import org.apache.phoenix.schema.types.{PSmallintArray, PVarchar}
 import org.apache.phoenix.spark.datasource.v2.reader.PhoenixTestingInputPartitionReader
 import org.apache.phoenix.spark.datasource.v2.writer.PhoenixTestingDataSourceWriter
-import org.apache.phoenix.spark.datasource.v2.{PhoenixDataSource, PhoenixTestingDataSource, SparkSchemaUtil}
+import org.apache.phoenix.spark.datasource.v2.{PhoenixDataSource, PhoenixTestingDataSource}
 import org.apache.phoenix.util.{ColumnInfo, SchemaUtil}
 import org.apache.spark.SparkException
 import org.apache.spark.sql.types._

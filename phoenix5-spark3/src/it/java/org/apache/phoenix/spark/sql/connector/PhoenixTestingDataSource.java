@@ -17,6 +17,7 @@
  */
 package org.apache.phoenix.spark.sql.connector;
 
+import org.apache.phoenix.spark.SparkSchemaUtil;
 import org.apache.phoenix.util.ColumnInfo;
 import org.apache.phoenix.util.PhoenixRuntime;
 import org.apache.spark.sql.connector.catalog.Table;

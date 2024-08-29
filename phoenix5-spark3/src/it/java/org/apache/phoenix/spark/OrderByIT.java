@@ -35,7 +35,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.phoenix.end2end.BaseOrderByIT;
+import org.apache.phoenix.end2end.ParallelStatsDisabledIT;
 import org.apache.phoenix.end2end.ParallelStatsDisabledTest;
 import org.apache.phoenix.spark.sql.connector.PhoenixDataSource;
 import org.apache.phoenix.util.PropertiesUtil;
@@ -47,7 +47,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 @Category(ParallelStatsDisabledTest.class)
-public class OrderByIT extends BaseOrderByIT {
+public class OrderByIT extends ParallelStatsDisabledIT {
 
     @Override
     protected ResultSet executeQueryThrowsException(Connection conn, QueryBuilder queryBuilder,

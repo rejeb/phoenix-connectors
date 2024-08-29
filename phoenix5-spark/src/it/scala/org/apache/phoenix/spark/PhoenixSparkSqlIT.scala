@@ -27,8 +27,6 @@ class PhoenixSparkSqlIT extends AbstractPhoenixSparkIT {
 
     val dataFrame = spark.sql(s"SELECT * FROM $sqlTableName")
 
-    dataFrame.show()
-
     dataFrame.collect() shouldEqual expected
   }
 
@@ -41,7 +39,6 @@ class PhoenixSparkSqlIT extends AbstractPhoenixSparkIT {
       s"OPTIONS ('table' 'TABLE1', '${PhoenixDataSource.JDBC_URL}' '$jdbcUrl')")
 
     val dataFrame = spark.sql(s"SELECT COL1 as LABEL FROM $sqlTableName where ID=1")
-    dataFrame.show
 
     dataFrame.collect() shouldEqual expected
   }
@@ -54,7 +51,6 @@ class PhoenixSparkSqlIT extends AbstractPhoenixSparkIT {
     spark.sql(s"CREATE TABLE $sqlTableName USING phoenix " +
       s"OPTIONS ('table' 'TABLE_WITH_COL_FAMILY', '${PhoenixDataSource.JDBC_URL}' '$jdbcUrl', 'doNotMapColumnFamily' 'false')")
     val dataFrame = spark.sql(s"SELECT ID FROM $sqlTableName where `DATA.COL1`='test_row_1'")
-    dataFrame.show()
 
     dataFrame.collect() shouldEqual expected
   }
@@ -66,7 +62,6 @@ class PhoenixSparkSqlIT extends AbstractPhoenixSparkIT {
     spark.sql(s"CREATE TABLE $sqlTableName USING phoenix " +
       s"OPTIONS ('table' 'TABLE_WITH_COL_FAMILY', '${PhoenixDataSource.JDBC_URL}' '$jdbcUrl', 'doNotMapColumnFamily' 'true')")
     val dataFrame = spark.sql(s"SELECT ID FROM $sqlTableName where COL1='test_row_1'")
-    dataFrame.show()
 
     dataFrame.collect() shouldEqual expected
   }

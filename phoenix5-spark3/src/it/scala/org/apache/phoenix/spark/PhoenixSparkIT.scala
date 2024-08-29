@@ -19,7 +19,7 @@ import java.util.Date
 import org.apache.phoenix.mapreduce.util.PhoenixConfigurationUtil
 import org.apache.phoenix.query.QueryServices
 import org.apache.phoenix.schema.types.{PSmallintArray, PVarchar}
-import org.apache.phoenix.spark.sql.connector.{PhoenixDataSource, PhoenixTestingDataSource, SparkSchemaUtil}
+import org.apache.phoenix.spark.sql.connector.{PhoenixDataSource, PhoenixTestingDataSource}
 import org.apache.phoenix.spark.sql.connector.reader.PhoenixTestPartitionReader
 import org.apache.phoenix.spark.sql.connector.writer.PhoenixTestBatchWrite
 import org.apache.phoenix.util.{ColumnInfo, SchemaUtil}

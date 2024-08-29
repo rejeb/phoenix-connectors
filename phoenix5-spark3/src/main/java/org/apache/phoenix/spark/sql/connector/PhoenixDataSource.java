@@ -19,6 +19,7 @@ package org.apache.phoenix.spark.sql.connector;
 
 import org.apache.phoenix.schema.PColumn;
 import org.apache.phoenix.schema.PTable;
+import org.apache.phoenix.spark.SparkSchemaUtil;
 import org.apache.phoenix.util.SchemaUtil;
 import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.sources.BaseRelation;
@@ -58,7 +59,7 @@ public class PhoenixDataSource implements TableProvider, DataSourceRegister, Rel
     public static final String TABLE = "table";
     public static final String DATE_AS_TIME_STAMP = "dateAsTimestamp";
     public static final String DO_NOT_MAP_COLUMN_FAMILY = "doNotMapColumnFamily";
-    public static final String TENANT_ID = "tenantId";
+    public static final String TENANT_ID = "TenantId";
 
     @Override
     public StructType inferSchema(CaseInsensitiveStringMap options) {
