@@ -6,18 +6,22 @@
 
     <parent>
         <groupId>org.apache.phoenix</groupId>
-        <artifactId>phoenix5-spark</artifactId>
+        <artifactId>phoenix5-spark3-parent</artifactId>
         <version>6.0.0-SNAPSHOT</version>
-        <relativePath>./pom.xml</relativePath>
+        <relativePath>../phoenix5_spark3_parent.xml</relativePath>
     </parent>
 
-    <artifactId>phoenix5-spark_2.12</artifactId>
+    <artifactId>phoenix5-spark3_2.12</artifactId>
+
+    <name>Phoenix Spark 3 Connector for Phoenix 5 with scala 2.12</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <scala.version>2.12.18</scala.version>
         <scala.binary.version>2.12</scala.binary.version>
+        <top.dir>${project.basedir}/..</top.dir>
     </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -35,7 +39,6 @@
             <plugin>
                 <groupId>org.scalatest</groupId>
                 <artifactId>scalatest-maven-plugin</artifactId>
-                <version>1.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

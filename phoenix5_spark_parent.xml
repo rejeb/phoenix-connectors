@@ -30,17 +30,16 @@
     <artifactId>phoenix-connectors</artifactId>
     <version>6.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>phoenix5-spark</artifactId>
+  <artifactId>phoenix5-spark-parent</artifactId>
   <name>Phoenix Spark 2 Connector for Phoenix 5</name>
 
   <packaging>pom</packaging>
   <modules>
-    <module>pom_2.11.xml</module>
-    <module>pom_2.12.xml</module>
+    <module>phoenix5-spark_2.11</module>
+    <module>phoenix5-spark_2.12</module>
   </modules>
 
   <properties>
-    <top.dir>${project.basedir}/..</top.dir>
     <scala.version>${scala.version.for.spark2}</scala.version>
     <scala.binary.version>${scala.binary.version.for.spark2}</scala.binary.version>
   </properties>
@@ -446,13 +445,64 @@
   </dependencies>
 
   <build>
-    <outputDirectory>target/${scala.binary.version}</outputDirectory>
-    <testOutputDirectory>target/${scala.binary.version}</testOutputDirectory>
     <pluginManagement>
     <plugins>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <configuration>
+          <charset>${project.build.sourceEncoding}</charset>
+          <jvmArgs>
+            <jvmArg>-Xmx1024m</jvmArg>
+          </jvmArgs>
+          <scalaVersion>${scala.version}</scalaVersion>
+          <scalaCompatVersion>${scala.binary.version}</scalaCompatVersion>
+          <recompileMode>all</recompileMode>
+        </configuration>
+        <executions>
+          <execution>
+            <id>scala-compile-first</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>add-source</goal>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>scala-test-compile</id>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.scalatest</groupId>
+        <artifactId>scalatest-maven-plugin</artifactId>
+        <version>2.2.0</version>
+        <configuration>
+          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+          <junitxml>.</junitxml>
+          <filereports>WDF TestSuite.txt</filereports>
+          <skipTests>${skip.scalatest}</skipTests>
+        </configuration>
+        <executions>
+          <execution>
+            <id>integration-test</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <!-- Need this false until we can switch to JUnit 4.13 due
+                to https://github.com/junit-team/junit4/issues/1223 -->
+              <parallel>false</parallel>
+              <tagsToExclude>Integration-Test</tagsToExclude>
+              <argLine>-XX:ReservedCodeCacheSize=512m ${argLine}</argLine>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -481,76 +531,6 @@
               org.slf4j:slf4j-log4j12
             </ignoredUnusedDeclaredDependency>
           </ignoredUnusedDeclaredDependencies>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>net.alchim31.maven</groupId>
-        <artifactId>scala-maven-plugin</artifactId>
-        <configuration>
-          <charset>${project.build.sourceEncoding}</charset>
-          <jvmArgs>
-            <jvmArg>-Xmx1024m</jvmArg>
-          </jvmArgs>
-          <scalaVersion>${scala.version}</scalaVersion>
-          <scalaCompatVersion>${scala.binary.version}</scalaCompatVersion>
-          <recompileMode>all</recompileMode>
-        </configuration>
-        <executions>
-          <execution>
-            <id>scala-compile-first</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>add-source</goal>
-              <goal>compile</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>scala-test-compile</id>
-            <phase>process-test-resources</phase>
-            <goals>
-              <goal>testCompile</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.scalatest</groupId>
-        <artifactId>scalatest-maven-plugin</artifactId>
-        <version>1.0</version>
-        <configuration>
-          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-          <junitxml>.</junitxml>
-          <filereports>WDF TestSuite.txt</filereports>
-          <skipTests>${skip.scalatest}</skipTests>
-        </configuration>
-        <executions>
-          <execution>
-            <id>integration-test</id>
-            <phase>integration-test</phase>
-            <goals>
-              <goal>test</goal>
-            </goals>
-            <configuration>
-              <!-- Need this false until we can switch to JUnit 4.13 due
-                to https://github.com/junit-team/junit4/issues/1223 -->
-              <parallel>false</parallel>
-              <tagsToExclude>Integration-Test</tagsToExclude>
-              <argLine>-XX:ReservedCodeCacheSize=512m ${argLine}</argLine>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>

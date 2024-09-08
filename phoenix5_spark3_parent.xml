@@ -29,16 +29,15 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>phoenix5-spark3</artifactId>
+  <artifactId>phoenix5-spark3-parent</artifactId>
   <name>Phoenix Spark 3 Connector for Phoenix 5 parent pom</name>
   <packaging>pom</packaging>
   <modules>
-    <module>pom_2.12.xml</module>
-    <module>pom_2.13.xml</module>
+    <module>phoenix5-spark3_2.12</module>
+    <module>phoenix5-spark3_2.13</module>
   </modules>
 
   <properties>
-    <top.dir>${project.basedir}/..</top.dir>
     <spark.version>${spark3.version}</spark.version>
     <scala.version>${scala.version.for.spark3}</scala.version>
     <scala.binary.version>${scala.binary.version.for.spark3}</scala.binary.version>
@@ -236,8 +235,6 @@
 
   </dependencies>
   <build>
-    <outputDirectory>target/${scala.binary.version}</outputDirectory>
-    <testOutputDirectory>target/${scala.binary.version}</testOutputDirectory>
     <pluginManagement>
     <plugins>
       <plugin>
@@ -276,7 +273,7 @@
       <plugin>
         <groupId>org.scalatest</groupId>
         <artifactId>scalatest-maven-plugin</artifactId>
-        <version>1.0</version>
+        <version>2.2.0</version>
         <configuration>
           <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
           <junitxml>.</junitxml>
