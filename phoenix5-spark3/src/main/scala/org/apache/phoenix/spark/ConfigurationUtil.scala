@@ -19,7 +19,7 @@ import org.apache.phoenix.mapreduce.util.{ColumnInfoToStringEncoderDecoder, Phoe
 import org.apache.phoenix.query.HBaseFactoryProvider
 import org.apache.phoenix.util.{ColumnInfo, PhoenixRuntime}
 
-import scala.collection.JavaConversions._
+import scala.collection.convert.ImplicitConversions._
 
 @deprecated("Use the DataSource V2 API implementation (see PhoenixDataSource)")
 object ConfigurationUtil extends Serializable {

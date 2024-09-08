@@ -31,9 +31,14 @@
 
   <artifactId>phoenix5-spark-shaded</artifactId>
   <name>Shaded Phoenix Spark 2 Connector for Phoenix 5</name>
-
+  <packaging>pom</packaging>
+  <modules>
+    <module>pom_2.11.xml</module>
+    <module>pom_2.12.xml</module>
+  </modules>
   <properties>
     <top.dir>${project.basedir}/..</top.dir>
+    <scala.binary.version>2.11</scala.binary.version>
   </properties>
 
   <dependencies>
@@ -41,7 +46,7 @@
     <!-- Phoenix comes first, as we shade most dependencies anyway -->
     <dependency>
       <groupId>org.apache.phoenix</groupId>
-      <artifactId>phoenix5-spark</artifactId>
+      <artifactId>phoenix5-spark_${scala.binary.version}</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.phoenix</groupId>

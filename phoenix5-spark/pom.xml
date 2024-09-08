@@ -33,6 +33,12 @@
   <artifactId>phoenix5-spark</artifactId>
   <name>Phoenix Spark 2 Connector for Phoenix 5</name>
 
+  <packaging>pom</packaging>
+  <modules>
+    <module>pom_2.11.xml</module>
+    <module>pom_2.12.xml</module>
+  </modules>
+
   <properties>
     <top.dir>${project.basedir}/..</top.dir>
     <scala.version>${scala.version.for.spark2}</scala.version>
@@ -141,7 +147,7 @@
     <dependency>
       <groupId>org.scalatest</groupId>
       <artifactId>scalatest_${scala.binary.version}</artifactId>
-      <version>2.2.4</version>
+      <version>3.1.4</version>
       <scope>test</scope>
     </dependency>
 
@@ -484,6 +490,7 @@
           </jvmArgs>
           <scalaVersion>${scala.version}</scalaVersion>
           <scalaCompatVersion>${scala.binary.version}</scalaCompatVersion>
+          <recompileMode>all</recompileMode>
         </configuration>
         <executions>
           <execution>

@@ -30,7 +30,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>phoenix5-spark3</artifactId>
-  <name>Phoenix Spark 3 Connector for Phoenix 5</name>
+  <name>Phoenix Spark 3 Connector for Phoenix 5 parent pom</name>
+  <packaging>pom</packaging>
+  <modules>
+    <module>pom_2.12.xml</module>
+    <module>pom_2.13.xml</module>
+  </modules>
 
   <properties>
     <top.dir>${project.basedir}/..</top.dir>
@@ -231,6 +236,8 @@
 
   </dependencies>
   <build>
+    <outputDirectory>target/${scala.binary.version}</outputDirectory>
+    <testOutputDirectory>target/${scala.binary.version}</testOutputDirectory>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -246,6 +253,7 @@
           </jvmArgs>
           <scalaVersion>${scala.version}</scalaVersion>
           <scalaCompatVersion>${scala.binary.version}</scalaCompatVersion>
+          <recompileMode>all</recompileMode>
         </configuration>
         <executions>
           <execution>

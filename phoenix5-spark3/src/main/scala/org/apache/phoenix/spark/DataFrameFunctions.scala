@@ -20,7 +20,7 @@ import org.apache.phoenix.mapreduce.util.PhoenixConfigurationUtil
 import org.apache.phoenix.util.SchemaUtil
 import org.apache.spark.sql.DataFrame
 
-import scala.collection.JavaConversions._
+import scala.collection.convert.ImplicitConversions._
 
 @deprecated("Use the DataSource V2 API implementation (see PhoenixDataSource)")
 class DataFrameFunctions(data: DataFrame) extends Serializable {

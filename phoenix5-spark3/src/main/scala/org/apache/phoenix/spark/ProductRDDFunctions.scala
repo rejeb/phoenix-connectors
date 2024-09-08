@@ -19,7 +19,7 @@ import org.apache.phoenix.mapreduce.PhoenixOutputFormat
 import org.apache.phoenix.mapreduce.util.PhoenixConfigurationUtil
 import org.apache.spark.rdd.RDD
 
-import scala.collection.JavaConversions._
+import scala.collection.convert.ImplicitConversions._
 
 @deprecated("Use the DataSource V2 API implementation (see PhoenixDataSource)")
 class ProductRDDFunctions[A <: Product](data: RDD[A]) extends Serializable {

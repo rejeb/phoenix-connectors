@@ -21,12 +21,14 @@ import org.apache.phoenix.jdbc.PhoenixDriver
 import org.apache.phoenix.mapreduce.PhoenixInputFormat
 import org.apache.phoenix.mapreduce.util.PhoenixConfigurationUtil
 import org.apache.phoenix.query.HBaseFactoryProvider
+import org.apache.phoenix.util.ColumnInfo
 import org.apache.spark.{Partition, SparkContext, TaskContext}
 import org.apache.spark.annotation.DeveloperApi
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{DataFrame, Row, SQLContext}
 
 import scala.collection.JavaConverters._
+import scala.collection.immutable
 
 @deprecated("Use the DataSource V2 API implementation (see PhoenixDataSource)")
 class PhoenixRDD(sc: SparkContext, table: String, columns: Seq[String],
@@ -111,9 +113,9 @@ class PhoenixRDD(sc: SparkContext, table: String, columns: Seq[String],
 
   // Convert our PhoenixRDD to a DataFrame
   def toDataFrame(sqlContext: SQLContext): DataFrame = {
-    val columnInfoList = PhoenixConfigurationUtil
+    val columnInfoList: Seq[ColumnInfo] = PhoenixConfigurationUtil
       .getSelectColumnMetadataList(new Configuration(phoenixConf))
-      .asScala
+      .asScala.toSeq
 
     // Keep track of the sql type and column names.
     val columns: Seq[(String, Int)] = columnInfoList.map(ci => {
@@ -125,10 +127,10 @@ class PhoenixRDD(sc: SparkContext, table: String, columns: Seq[String],
     val structType = SparkSchemaUtil.phoenixSchemaToCatalystSchema(columnInfoList, dateAsTimestamp)
 
     // Create the data frame from the converted Spark schema
-    sqlContext.createDataFrame(map(pr => {
+    sqlContext.createDataFrame(map((pr: PhoenixRecordWritable) => {
 
       // Create a sequence of column data
-      val rowSeq = columns.map { case (name, sqlType) =>
+      val rowSeq: scala.Seq[Any] = columns.map { case (name, sqlType) =>
         val res = pr.resultMap(name)
           // Special handling for data types
           if (dateAsTimestamp && (sqlType == 91 || sqlType == 19) && res!=null) { // 91 is the defined type for Date and 19 for UNSIGNED_DATE

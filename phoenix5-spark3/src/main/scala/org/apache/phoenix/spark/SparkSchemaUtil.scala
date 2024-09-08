@@ -22,6 +22,8 @@ import org.apache.phoenix.schema.types._
 import org.apache.phoenix.util.{ColumnInfo, SchemaUtil}
 import org.apache.spark.sql.types._
 
+import scala.collection.Seq
+
 object SparkSchemaUtil {
 
   def phoenixSchemaToCatalystSchema(columnList: Seq[ColumnInfo], dateAsTimestamp: Boolean = false, doNotMapColumnFamily: Boolean = false): StructType = {

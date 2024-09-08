@@ -25,16 +25,20 @@
       <directory>${project.basedir}/../phoenix5-spark/target</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
-        <include>phoenix5-spark-${project.version}.jar</include>
-        <include>phoenix5-spark.jar</include>
+        <include>phoenix5-spark_2.11-${project.version}.jar</include>
+        <include>phoenix5-spark_2.11.jar</include>
+        <include>phoenix5-spark_2.12-${project.version}.jar</include>
+        <include>phoenix5-spark_2.12.jar</include>
       </includes>
     </fileSet>
     <fileSet>
       <directory>${project.basedir}/../phoenix5-spark3/target</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
-        <include>phoenix5-spark3-${project.version}.jar</include>
-        <include>phoenix5-spark3.jar</include>
+        <include>phoenix5-spark3_2.12-${project.version}.jar</include>
+        <include>phoenix5-spark3_2.12.jar</include>
+        <include>phoenix5-spark3_2.13-${project.version}.jar</include>
+        <include>phoenix5-spark3_2.13.jar</include>
       </includes>
     </fileSet>
     <fileSet>

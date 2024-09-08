@@ -14,6 +14,7 @@
 package org.apache.phoenix.spark
 
 
+
 import java.sql.DriverManager
 import java.util.Date
 import org.apache.phoenix.mapreduce.util.PhoenixConfigurationUtil
@@ -27,7 +28,7 @@ import org.apache.spark.SparkException
 import org.apache.spark.sql.types.{ArrayType, BinaryType, ByteType, DateType, IntegerType, LongType, ShortType, StringType, StructField, StructType}
 import org.apache.spark.sql.{Row, SaveMode}
 
-import scala.collection.mutable
+
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -378,7 +379,7 @@ class PhoenixSparkIT extends AbstractPhoenixSparkIT {
     val totalRecords = 100
     val upsertBatchSize = 5
 
-    val records = new mutable.MutableList[Row]
+    val records = new ListBuffer[Row]
     for (x <- 1 to totalRecords) {
       records += Row(x.toLong, x.toString, x)
     }
