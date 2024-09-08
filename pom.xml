@@ -66,13 +66,13 @@
   <modules>
     <!-- Changing the module order here may cause maven to get stuck in an 
       infinite loop -->
-    <module>phoenix5-hive</module>
-    <module>phoenix5-hive-shaded</module>
+<!--    <module>phoenix5-hive</module>-->
+<!--    <module>phoenix5-hive-shaded</module>-->
     <module>phoenix5-spark</module>
-    <module>phoenix5-spark-shaded</module>
-    <module>phoenix5-spark3</module>
-    <module>phoenix5-spark3-shaded</module>
-    <module>phoenix5-connectors-assembly</module>
+<!--    <module>phoenix5-spark-shaded</module>-->
+<!--    <module>phoenix5-spark3</module>-->
+<!--    <module>phoenix5-spark3-shaded</module>-->
+<!--    <module>phoenix5-connectors-assembly</module>-->
   </modules>
 
   <properties>
