@@ -448,6 +448,7 @@
   <build>
     <outputDirectory>target/${scala.binary.version}</outputDirectory>
     <testOutputDirectory>target/${scala.binary.version}</testOutputDirectory>
+    <pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -579,6 +580,7 @@
       <!-- Taken from phoenix-client-parent this should be kept in sync with
         Phoenix as much as possible -->
     </plugins>
+    </pluginManagement>
   </build>
   <profiles>
     <profile>

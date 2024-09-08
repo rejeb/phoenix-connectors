@@ -238,6 +238,7 @@
   <build>
     <outputDirectory>target/${scala.binary.version}</outputDirectory>
     <testOutputDirectory>target/${scala.binary.version}</testOutputDirectory>
+    <pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -321,6 +322,7 @@
         </configuration>
       </plugin>
     </plugins>
+    </pluginManagement>
   </build>
   <profiles>
     <profile>

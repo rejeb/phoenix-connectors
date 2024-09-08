@@ -246,6 +246,7 @@
   </dependencies>
 
   <build>
+    <pluginManagement>
     <plugins>
       <!-- Taken from phoenix-client-parent this should be kept in sync with
         Phoenix as much as possible -->
@@ -530,6 +531,7 @@
         </configuration>
       </plugin>
     </plugins>
+    </pluginManagement>
   </build>
 
 </project>
