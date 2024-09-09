@@ -43,11 +43,19 @@
     </dependency>
     <dependency>
       <groupId>org.apache.phoenix</groupId>
-      <artifactId>phoenix5-spark</artifactId>
+      <artifactId>phoenix5-spark_2.11</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.phoenix</groupId>
-      <artifactId>phoenix5-spark3</artifactId>
+      <artifactId>phoenix5-spark_2.12</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.phoenix</groupId>
+      <artifactId>phoenix5-spark3_2.12</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.phoenix</groupId>
+      <artifactId>phoenix5-spark3_2.13</artifactId>
     </dependency>
   </dependencies>
 
@@ -98,81 +106,161 @@
             </configuration>
           </execution>
           <execution>
-            <id>spark without version</id>
+            <id>spark scala 2.11 without version</id>
             <phase>package</phase>
             <goals>
               <goal>exec</goal>
             </goals>
             <configuration>
               <executable>ln</executable>
-              <workingDirectory>${project.basedir}/../phoenix5-spark/target</workingDirectory>
+              <workingDirectory>${project.basedir}/../phoenix5-spark/phoenix5-spark_2.11/target</workingDirectory>
               <arguments>
                 <argument>-fnsv</argument>
                 <argument>
-                  phoenix5-spark-${project.version}.jar
+                  phoenix5-spark_2.11-${project.version}.jar
                 </argument>
                 <argument>
-                  phoenix5-spark.jar
+                  phoenix5-spark_2.11.jar
                 </argument>
               </arguments>
             </configuration>
           </execution>
           <execution>
-            <id>spark-shaded without version</id>
+            <id>spark scala 2.12 without version</id>
             <phase>package</phase>
             <goals>
               <goal>exec</goal>
             </goals>
             <configuration>
               <executable>ln</executable>
-              <workingDirectory>${project.basedir}/../phoenix5-spark-shaded/target</workingDirectory>
+              <workingDirectory>${project.basedir}/../phoenix5-spark/phoenix5-spark_2.12/target</workingDirectory>
               <arguments>
                 <argument>-fnsv</argument>
                 <argument>
-                  phoenix5-spark-shaded-${project.version}.jar
+                  phoenix5-spark_2.12-${project.version}.jar
                 </argument>
                 <argument>
-                  phoenix5-spark-shaded.jar
+                  phoenix5-spark_2.12.jar
                 </argument>
               </arguments>
             </configuration>
           </execution>
           <execution>
-            <id>spark3-shaded without version</id>
+            <id>spark-shaded scala 2.11 without version</id>
             <phase>package</phase>
             <goals>
               <goal>exec</goal>
             </goals>
             <configuration>
               <executable>ln</executable>
-              <workingDirectory>${project.basedir}/../phoenix5-spark3-shaded/target</workingDirectory>
+              <workingDirectory>${project.basedir}/../phoenix5-spark-shaded/phoenix5-spark-shaded_2.11/target</workingDirectory>
               <arguments>
                 <argument>-fnsv</argument>
                 <argument>
-                  phoenix5-spark3-shaded-${project.version}.jar
+                  phoenix5-spark-shaded_2.11-${project.version}.jar
                 </argument>
                 <argument>
-                  phoenix5-spark3-shaded.jar
+                  phoenix5-spark-shaded_2.11.jar
                 </argument>
               </arguments>
             </configuration>
           </execution>
           <execution>
-            <id>spark3 without version</id>
+            <id>spark-shaded scala 2.12 without version</id>
             <phase>package</phase>
             <goals>
               <goal>exec</goal>
             </goals>
             <configuration>
               <executable>ln</executable>
-              <workingDirectory>${project.basedir}/../phoenix5-spark3/target</workingDirectory>
+              <workingDirectory>${project.basedir}/../phoenix5-spark-shaded/phoenix5-spark-shaded_2.12/target</workingDirectory>
               <arguments>
                 <argument>-fnsv</argument>
                 <argument>
-                  phoenix5-spark3-${project.version}.jar
+                  phoenix5-spark-shaded_2.12-${project.version}.jar
                 </argument>
                 <argument>
-                  phoenix5-spark3.jar
+                  phoenix5-spark-shaded_2.12.jar
+                </argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>spark3-shaded scala 2.12 without version</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>ln</executable>
+              <workingDirectory>${project.basedir}/../phoenix5-spark3-shaded/phoenix5-spark3-shaded_2.12/target</workingDirectory>
+              <arguments>
+                <argument>-fnsv</argument>
+                <argument>
+                  phoenix5-spark3-shaded_2.12-${project.version}.jar
+                </argument>
+                <argument>
+                  phoenix5-spark3-shaded_2.12.jar
+                </argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>spark3-shaded scala 2.13 without version</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>ln</executable>
+              <workingDirectory>${project.basedir}/../phoenix5-spark3-shaded/phoenix5-spark3-shaded_2.13/target</workingDirectory>
+              <arguments>
+                <argument>-fnsv</argument>
+                <argument>
+                  phoenix5-spark3-shaded_2.13-${project.version}.jar
+                </argument>
+                <argument>
+                  phoenix5-spark3-shaded_2.13.jar
+                </argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>spark3 scala 2.12 without version</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>ln</executable>
+              <workingDirectory>${project.basedir}/../phoenix5-spark3/phoenix5-spark3_2.12/target</workingDirectory>
+              <arguments>
+                <argument>-fnsv</argument>
+                <argument>
+                  phoenix5-spark3_2.12-${project.version}.jar
+                </argument>
+                <argument>
+                  phoenix5-spark3_2.12.jar
+                </argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>spark3 scala 2.13 without version</id>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>ln</executable>
+              <workingDirectory>${project.basedir}/../phoenix5-spark3/phoenix5-spark3_2.13/target</workingDirectory>
+              <arguments>
+                <argument>-fnsv</argument>
+                <argument>
+                  phoenix5-spark3_2.13-${project.version}.jar
+                </argument>
+                <argument>
+                  phoenix5-spark3_2.13.jar
                 </argument>
               </arguments>
             </configuration>
@@ -226,15 +314,19 @@
       <dependencies>
         <dependency>
           <groupId>org.apache.phoenix</groupId>
-          <artifactId>phoenix5-hive-shaded</artifactId>
+          <artifactId>phoenix5-spark-shaded_2.11</artifactId>
         </dependency>
         <dependency>
           <groupId>org.apache.phoenix</groupId>
-          <artifactId>phoenix5-spark-shaded</artifactId>
+          <artifactId>phoenix5-spark-shaded_2.12</artifactId>
         </dependency>
         <dependency>
           <groupId>org.apache.phoenix</groupId>
-          <artifactId>phoenix5-spark3-shaded</artifactId>
+          <artifactId>phoenix5-spark3-shaded_2.12</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.phoenix</groupId>
+          <artifactId>phoenix5-spark3-shaded_2.13</artifactId>
         </dependency>
       </dependencies>
     </profile>

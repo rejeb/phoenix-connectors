@@ -125,8 +125,8 @@
     <scala.version.for.spark2>2.11.12</scala.version.for.spark2>
     <scala.binary.version.for.spark2>2.11</scala.binary.version.for.spark2>
     <spark3.version>3.2.4</spark3.version>
-    <scala.version.for.spark3>2.12.18</scala.version.for.spark3>
-    <scala.binary.version.for.spark3>2.12</scala.binary.version.for.spark3>
+    <scala.version.for.spark3>2.13.14</scala.version.for.spark3>
+    <scala.binary.version.for.spark3>2.13</scala.binary.version.for.spark3>
 
     <log4j.version>1.2.17</log4j.version>
     <log4j2.version>2.23.1</log4j2.version>
@@ -291,6 +291,8 @@
                 <sources>
                   <source>${basedir}/src/it/java</source>
                   <source>${basedir}/src/it/scala</source>
+                  <source>${basedir}/src/main/java</source>
+                  <source>${basedir}/src/main/scala</source>
                 </sources>
               </configuration>
             </execution>
@@ -304,6 +306,7 @@
                 <resources>
                   <resource>
                     <directory>${basedir}/src/it/resources</directory>
+                    <directory>${basedir}/src/main/resources</directory>
                   </resource>
                 </resources>
               </configuration>
@@ -572,22 +575,43 @@
       </dependency>
       <dependency>
         <groupId>org.apache.phoenix</groupId>
-        <artifactId>phoenix5-spark</artifactId>
+        <artifactId>phoenix5-spark_2.11</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.phoenix</groupId>
-        <artifactId>phoenix5-spark-shaded</artifactId>
+        <artifactId>phoenix5-spark_2.12</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.phoenix</groupId>
-        <artifactId>phoenix5-spark3</artifactId>
+        <artifactId>phoenix5-spark3_2.12</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.phoenix</groupId>
-        <artifactId>phoenix5-spark3-shaded</artifactId>
+        <artifactId>phoenix5-spark3_2.13</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.phoenix</groupId>
+        <artifactId>phoenix5-spark-shaded_2.11</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.phoenix</groupId>
+        <artifactId>phoenix5-spark-shaded_2.12</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.phoenix</groupId>
+        <artifactId>phoenix5-spark3-shaded_2.12</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.phoenix</groupId>
+        <artifactId>phoenix5-spark3-shaded_2.13</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

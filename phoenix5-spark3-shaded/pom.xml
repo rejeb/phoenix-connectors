@@ -31,9 +31,15 @@
 
   <artifactId>phoenix5-spark3-shaded</artifactId>
   <name>Shaded Phoenix Spark 3 Connector for Phoenix 5</name>
+  <packaging>pom</packaging>
+  <modules>
+    <module>phoenix5-spark3-shaded_2.12</module>
+    <module>phoenix5-spark3-shaded_2.13</module>
+  </modules>
 
   <properties>
     <top.dir>${project.basedir}/..</top.dir>
+    <scala.binary.version>2.12</scala.binary.version>
   </properties>
 
   <dependencies>
@@ -41,7 +47,7 @@
     <!-- Phoenix comes first, as we shade most dependencies anyway -->
     <dependency>
       <groupId>org.apache.phoenix</groupId>
-      <artifactId>phoenix5-spark3</artifactId>
+      <artifactId>phoenix5-spark3_${scala.binary.version}</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.phoenix</groupId>
@@ -241,6 +247,7 @@
   </dependencies>
 
   <build>
+    <pluginManagement>
     <plugins>
       <!-- Taken from phoenix-client-parent this should be kept in sync with
         Phoenix as much as possible -->
@@ -527,6 +534,7 @@
         </configuration>
       </plugin>
     </plugins>
+    </pluginManagement>
   </build>
 
 </project>

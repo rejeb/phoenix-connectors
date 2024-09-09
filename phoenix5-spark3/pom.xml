@@ -30,7 +30,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>phoenix5-spark3</artifactId>
-  <name>Phoenix Spark 3 Connector for Phoenix 5</name>
+  <name>Phoenix Spark 3 Connector for Phoenix 5 parent pom</name>
+  <packaging>pom</packaging>
+  <modules>
+    <module>phoenix5-spark3_2.12</module>
+    <module>phoenix5-spark3_2.13</module>
+  </modules>
 
   <properties>
     <top.dir>${project.basedir}/..</top.dir>
@@ -231,6 +236,7 @@
 
   </dependencies>
   <build>
+    <pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -246,6 +252,7 @@
           </jvmArgs>
           <scalaVersion>${scala.version}</scalaVersion>
           <scalaCompatVersion>${scala.binary.version}</scalaCompatVersion>
+          <recompileMode>all</recompileMode>
         </configuration>
         <executions>
           <execution>
@@ -267,7 +274,7 @@
       <plugin>
         <groupId>org.scalatest</groupId>
         <artifactId>scalatest-maven-plugin</artifactId>
-        <version>1.0</version>
+        <version>2.2.0</version>
         <configuration>
           <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
           <junitxml>.</junitxml>
@@ -313,6 +320,7 @@
         </configuration>
       </plugin>
     </plugins>
+    </pluginManagement>
   </build>
   <profiles>
     <profile>
