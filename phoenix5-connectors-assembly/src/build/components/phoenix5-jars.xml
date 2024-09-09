@@ -22,7 +22,7 @@
 <component>
   <fileSets>
     <fileSet>
-      <directory>${project.basedir}/../phoenix5-spark_2.11/target</directory>
+      <directory>${project.basedir}/../phoenix5-spark/phoenix5-spark_2.11/target</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
         <include>phoenix5-spark_2.11-${project.version}.jar</include>
@@ -30,7 +30,7 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/../phoenix5-spark_2.12/target</directory>
+      <directory>${project.basedir}/../phoenix5-spark/phoenix5-spark_2.12/target</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
         <include>phoenix5-spark_2.12-${project.version}.jar</include>
@@ -38,7 +38,7 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/../phoenix5-spark3_2.12/target</directory>
+      <directory>${project.basedir}/../phoenix5-spark3/phoenix5-spark3_2.12/target</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
         <include>phoenix5-spark3_2.12-${project.version}.jar</include>
@@ -46,7 +46,7 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/../phoenix5-spark3_2.13/target</directory>
+      <directory>${project.basedir}/../phoenix5-spark3/phoenix5-spark3_2.13/target</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
         <include>phoenix5-spark3_2.13-${project.version}.jar</include>

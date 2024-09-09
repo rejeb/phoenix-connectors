@@ -68,9 +68,9 @@
       infinite loop -->
     <module>phoenix5-hive</module>
     <module>phoenix5-hive-shaded</module>
-    <module>phoenix5_spark_parent.xml</module>
+    <module>phoenix5-spark</module>
     <module>phoenix5-spark-shaded</module>
-    <module>phoenix5_spark3_parent.xml</module>
+    <module>phoenix5-spark3</module>
     <module>phoenix5-spark3-shaded</module>
     <module>phoenix5-connectors-assembly</module>
   </modules>
@@ -306,6 +306,7 @@
                 <resources>
                   <resource>
                     <directory>${basedir}/src/it/resources</directory>
+                    <directory>${basedir}/src/main/resources</directory>
                   </resource>
                 </resources>
               </configuration>

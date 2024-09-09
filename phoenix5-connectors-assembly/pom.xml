@@ -113,7 +113,7 @@
             </goals>
             <configuration>
               <executable>ln</executable>
-              <workingDirectory>${project.basedir}/../phoenix5-spark_2.11/target</workingDirectory>
+              <workingDirectory>${project.basedir}/../phoenix5-spark/phoenix5-spark_2.11/target</workingDirectory>
               <arguments>
                 <argument>-fnsv</argument>
                 <argument>
@@ -133,7 +133,7 @@
             </goals>
             <configuration>
               <executable>ln</executable>
-              <workingDirectory>${project.basedir}/../phoenix5-spark_2.12/target</workingDirectory>
+              <workingDirectory>${project.basedir}/../phoenix5-spark/phoenix5-spark_2.12/target</workingDirectory>
               <arguments>
                 <argument>-fnsv</argument>
                 <argument>
@@ -153,7 +153,7 @@
             </goals>
             <configuration>
               <executable>ln</executable>
-              <workingDirectory>${project.basedir}/../phoenix5-spark-shaded/target</workingDirectory>
+              <workingDirectory>${project.basedir}/../phoenix5-spark-shaded/phoenix5-spark-shaded_2.11/target</workingDirectory>
               <arguments>
                 <argument>-fnsv</argument>
                 <argument>
@@ -173,7 +173,7 @@
             </goals>
             <configuration>
               <executable>ln</executable>
-              <workingDirectory>${project.basedir}/../phoenix5-spark-shaded/target</workingDirectory>
+              <workingDirectory>${project.basedir}/../phoenix5-spark-shaded/phoenix5-spark-shaded_2.12/target</workingDirectory>
               <arguments>
                 <argument>-fnsv</argument>
                 <argument>
@@ -193,7 +193,7 @@
             </goals>
             <configuration>
               <executable>ln</executable>
-              <workingDirectory>${project.basedir}/../phoenix5-spark3-shaded/target</workingDirectory>
+              <workingDirectory>${project.basedir}/../phoenix5-spark3-shaded/phoenix5-spark3-shaded_2.12/target</workingDirectory>
               <arguments>
                 <argument>-fnsv</argument>
                 <argument>
@@ -213,7 +213,7 @@
             </goals>
             <configuration>
               <executable>ln</executable>
-              <workingDirectory>${project.basedir}/../phoenix5-spark3-shaded/target</workingDirectory>
+              <workingDirectory>${project.basedir}/../phoenix5-spark3-shaded/phoenix5-spark3-shaded_2.13/target</workingDirectory>
               <arguments>
                 <argument>-fnsv</argument>
                 <argument>
@@ -233,7 +233,7 @@
             </goals>
             <configuration>
               <executable>ln</executable>
-              <workingDirectory>${project.basedir}/../phoenix5-spark3_2.12/target</workingDirectory>
+              <workingDirectory>${project.basedir}/../phoenix5-spark3/phoenix5-spark3_2.12/target</workingDirectory>
               <arguments>
                 <argument>-fnsv</argument>
                 <argument>
@@ -253,7 +253,7 @@
             </goals>
             <configuration>
               <executable>ln</executable>
-              <workingDirectory>${project.basedir}/../phoenix5-spark3_2.13/target</workingDirectory>
+              <workingDirectory>${project.basedir}/../phoenix5-spark3/phoenix5-spark3_2.13/target</workingDirectory>
               <arguments>
                 <argument>-fnsv</argument>
                 <argument>

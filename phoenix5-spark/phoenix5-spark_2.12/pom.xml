@@ -6,9 +6,8 @@
 
     <parent>
         <groupId>org.apache.phoenix</groupId>
-        <artifactId>phoenix5-spark-parent</artifactId>
+        <artifactId>phoenix5-spark</artifactId>
         <version>6.0.0-SNAPSHOT</version>
-        <relativePath>../phoenix5_spark_parent.xml</relativePath>
     </parent>
 
     <artifactId>phoenix5-spark_2.12</artifactId>
@@ -19,7 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <scala.version>2.12.18</scala.version>
         <scala.binary.version>2.12</scala.binary.version>
-        <top.dir>${project.basedir}/..</top.dir>
+        <top.dir>${project.basedir}/../..</top.dir>
     </properties>
     <build>
         <plugins>
@@ -67,6 +66,7 @@
                                 <resource>
                                     <directory>../phoenix5-spark_2.11/src/it/resources</directory>
                                     <directory>../phoenix5-spark_2.11/src/test/resources</directory>
+                                    <directory>../phoenix5-spark_2.11/src/main/resources</directory>
                                 </resource>
                             </resources>
                         </configuration>

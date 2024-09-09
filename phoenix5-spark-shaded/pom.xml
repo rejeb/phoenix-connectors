@@ -33,8 +33,8 @@
   <name>Shaded Phoenix Spark 2 Connector for Phoenix 5</name>
   <packaging>pom</packaging>
   <modules>
-    <module>pom_2.11.xml</module>
-    <module>pom_2.12.xml</module>
+    <module>phoenix5-spark-shaded_2.11</module>
+    <module>phoenix5-spark-shaded_2.12</module>
   </modules>
   <properties>
     <top.dir>${project.basedir}/..</top.dir>
