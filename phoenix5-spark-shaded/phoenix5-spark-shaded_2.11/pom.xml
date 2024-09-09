@@ -17,6 +17,22 @@
         <scala.binary.version>2.11</scala.binary.version>
     </properties>
    <build>
-       <outputDirectory>target/2.11</outputDirectory>
+       <plugins>
+           <!-- Taken from phoenix-client-parent this should be kept in sync with
+             Phoenix as much as possible -->
+           <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-shade-plugin</artifactId>
+           </plugin>
+           <!-- TODO consider not enabling these globally instead -->
+           <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-compiler-plugin</artifactId>
+           </plugin>
+           <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-dependency-plugin</artifactId>
+           </plugin>
+       </plugins>
    </build>
 </project>
